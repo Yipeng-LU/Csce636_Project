@@ -1,3 +1,4 @@
+import 4.model_compile_train
 history_dic=history.history
 acc=history_dic['acc']
 loss=history_dic['loss']
