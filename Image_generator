@@ -1,0 +1,55 @@
+def get_input(input_path):
+    out= np.ndarray((50,240,320,3), dtype='float32')
+    l=len(input_path)
+    s=input_path[:l-15]
+    for i in range(10):
+        out[i,:,:,:]=(io.imread(s+'0{}'.format(i)+'_rendered.png'))/255
+    for i in range(10,50):
+        out[i,:,:,:]=(io.imread(s+'{}'.format(i)+'_rendered.png'))/255
+    return out
+def image_generator(path,batch_size):
+    for r, d, f in os.walk(path):
+        i=0
+        for dir in d:
+            if i==0:
+                dir1=dir
+                name1=os.listdir(path+dir)
+            else:
+                dir2=dir
+                name2=os.listdir(path+dir)
+            i+=1
+        break
+    root1=[]
+    root2=[]
+    for i in name1:
+        if i[-15:]=='00_rendered.png':
+            root1.append(path+dir1+'/'+i)
+    for i in name2:
+        if i[-15:]=='00_rendered.png':
+            root2.append(path+dir2+'/'+i)
+    root=root1+root2
+    l=len(root)
+    random.shuffle(root)
+    i=0
+    while True:
+        # Select files (paths/indices) for the batch
+        batch_paths  = root[i:i+batch_size]
+        batch_input  = []
+        batch_output = [] 
+        # Read in each input, perform preprocessing and get labels
+        for input_path in batch_paths:
+            input = get_input(input_path )
+            if 'non' in input_path:
+              output=0
+            else:
+              output=1
+            batch_input += [ input ]
+            batch_output += [ output ]
+            # Return a tuple of (input, output) to feed the network
+        batch_x = np.array( batch_input )
+        batch_y = np.array( batch_output )
+        yield( batch_x, batch_y )
+        i+=batch_size
+        if i+batch_size>l:
+            i=0
+            random.shuffle(root)
