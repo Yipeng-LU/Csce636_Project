@@ -1,0 +1,44 @@
+import moviepy.editor as mp
+def process(root,name):
+    video = mp.VideoFileClip(root)
+    video=video.resize((320,240))
+    l=video.duration
+    i=0
+    j=5
+    while i+j<=l:
+        v=video.subclip(i,i+j)
+        k=int(i/j)
+        if k<10:
+          v.write_videofile("/content/drive/My Drive/video_data/0/{}-00{}.mp4".format(name[:-4],k),fps=10,audio=False)
+        elif k<100:
+          v.write_videofile("/content/drive/My Drive/video_data/0/{}-0{}.mp4".format(name[:-4],k),fps=10,audio=False)
+        else:
+          v.write_videofile("/content/drive/My Drive/video_data/0/{}-{}.mp4".format(name[:-4],k),fps=10,audio=False)
+        i+=j
+root='/content/drive/My Drive/video_data/non_stretch/'
+for root, dirs, names in os.walk(root):
+    for dir in dirs:
+        for name in os.listdir(root+dir):
+          process(root+dir+'/'+name,name)
+
+def process(root,name):
+    video = mp.VideoFileClip(root)
+    video=video.resize((320,240))
+    l=video.duration
+    i=0
+    j=5
+    while i+j<=l:
+        v=video.subclip(i,i+j)
+        k=int(i/j)
+        if k<10:
+          v.write_videofile("/content/drive/My Drive/video_data/1/{}-00{}.mp4".format(name[:-4],k),fps=10,audio=False)
+        elif k<100:
+          v.write_videofile("/content/drive/My Drive/video_data/1/{}-0{}.mp4".format(name[:-4],k),fps=10,audio=False)
+        else:
+          v.write_videofile("/content/drive/My Drive/video_data/1/{}-{}.mp4".format(name[:-4],k),fps=10,audio=False)
+        i+=j
+root='/content/drive/My Drive/video_data/stretch/'
+for root, dirs, names in os.walk(root):
+    for dir in dirs:
+        for name in os.listdir(root+dir):
+          process(root+dir+'/'+name,name)
