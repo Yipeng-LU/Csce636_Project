@@ -1,3 +1,4 @@
+import 3.Image_generator
 import os
 import skimage.io as io
 import numpy as np
