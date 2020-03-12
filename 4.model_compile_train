@@ -38,7 +38,7 @@ metrics=['acc'])
 import keras
 callbacks_list = [
 keras.callbacks.ModelCheckpoint(
-filepath='/content/drive/My Drive/my_model2.h5',
+filepath='/content/drive/My Drive/my_model.h5',
 monitor='val_loss',
 save_best_only=True,
 )
