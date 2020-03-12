@@ -1,0 +1,54 @@
+import os
+import skimage.io as io
+import numpy as np
+from keras import layers
+from keras import models
+from keras.models import Sequential, Model
+from keras import Input
+from keras.layers import LSTM
+import random
+
+cnn= models.Sequential()
+cnn.add(layers.Conv2D(32, (3, 3), activation='relu',input_shape=(240, 320, 3)))
+cnn.add(layers.MaxPooling2D((2, 2)))
+cnn.add(layers.Conv2D(64, (3, 3), activation='relu'))
+cnn.add(layers.MaxPooling2D((2, 2)))
+cnn.add(layers.Conv2D(128, (3, 3), activation='relu'))
+cnn.add(layers.MaxPooling2D((2, 2)))
+cnn.add(layers.Conv2D(128, (3, 3), activation='relu'))
+cnn.add(layers.MaxPooling2D((2, 2)))
+cnn.add(layers.Flatten())
+cnn.add(layers.Dropout(0.5))
+cnn.add(layers.Dense(32, activation='relu'))
+rnn= models.Sequential()
+rnn.add(layers.TimeDistributed(cnn,input_shape=(50, 240, 320, 3)))
+rnn.add(layers.GRU(32,dropout=0.1,recurrent_dropout=0.5,input_shape=(50,32),return_sequences=True))
+rnn.add(layers.GRU(64, activation='relu',dropout=0.1,recurrent_dropout=0.5))
+rnn.add(layers.Dense(1, activation='sigmoid'))
+rnn.summary()
+
+from keras import optimizers
+rnn.compile(loss='binary_crossentropy',
+optimizer=optimizers.RMSprop(lr=1e-4),
+metrics=['acc'])
+
+!cp -r '/content/drive/My Drive/video_data/data/' /content/
+
+import keras
+callbacks_list = [
+keras.callbacks.ModelCheckpoint(
+filepath='/content/drive/My Drive/my_model2.h5',
+monitor='val_loss',
+save_best_only=True,
+)
+]
+
+train_path='/content/data/train/'
+val_path='/content/data/val/'
+history = rnn.fit_generator(
+image_generator(train_path,4),
+steps_per_epoch=164,
+epochs=30,
+validation_data=image_generator(val_path,4),
+validation_steps=81,
+callbacks=callbacks_list)
