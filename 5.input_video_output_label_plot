@@ -1,3 +1,4 @@
+import 4.model_compile_train
 import moviepy.editor as mp
 import os
 import numpy as np
