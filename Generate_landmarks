@@ -1,0 +1,37 @@
+import random
+root='/content/drive/My Drive/video_data/1/'
+names=os.listdir(root)
+l=len(names)
+print(l)
+numTrain=int(l/2)
+numVal=int(l/4)
+numTest=l-numTrain-numVal
+random.shuffle(names)
+for i in range(numTrain):
+    v=names[i]
+    !./build/examples/openpose/openpose.bin --video '/content/drive/My Drive/video_data/1/{v}' --write_images '/content/drive/My Drive/video_data/train/train_stretch/' --disable_blending --display 0
+for i in range(numTrain,numTrain+numVal):
+    v=names[i]
+    !./build/examples/openpose/openpose.bin --video '/content/drive/My Drive/video_data/1/{v}' --write_images '/content/drive/My Drive/video_data/val/val_stretch/' --disable_blending --display 0
+for i in range(numTrain+numVal,l):
+    v=names[i]
+    !./build/examples/openpose/openpose.bin --video '/content/drive/My Drive/video_data/1/{v}' --write_images '/content/drive/My Drive/video_data/test/test_stretch/' --disable_blending --display 0
+    import random
+    
+root='/content/drive/My Drive/video_data/0/'
+names=os.listdir(root)
+l=len(names)
+print(l)
+numTrain=int(l/2)
+numVal=int(l/4)
+numTest=l-numTrain-numVal
+random.shuffle(names)
+for i in range(numTrain):
+    v=names[i]
+    !./build/examples/openpose/openpose.bin --video '/content/drive/My Drive/video_data/0/{v}' --write_images '/content/drive/My Drive/video_data/train/train_non_stretch/' --disable_blending --display 0
+for i in range(numTrain,numTrain+numVal):
+    v=names[i]
+    !./build/examples/openpose/openpose.bin --video '/content/drive/My Drive/video_data/0/{v}' --write_images '/content/drive/My Drive/video_data/val/val_non_stretch/' --disable_blending --display 0
+for i in range(numTrain+numVal,l):
+    v=names[i]
+    !./build/examples/openpose/openpose.bin --video '/content/drive/My Drive/video_data/0/{v}' --write_images '/content/drive/My Drive/video_data/test/test_non_stretch/' --disable_blending --display 0
