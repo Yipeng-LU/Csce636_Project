@@ -1,0 +1,26 @@
+history_dic=history.history
+acc=history_dic['acc']
+loss=history_dic['loss']
+val_acc=history_dic['val_acc']
+val_loss=history_dic['val_loss']
+import matplotlib.pyplot as plt
+x=range(10)
+plt.plot(x,val_loss,'b',label='validation loss')
+plt.plot(x,loss,'bo',label='training loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.title('training and validation loss')
+plt.legend()
+plt.show()
+
+plt.clf()
+plt.plot(x,val_acc,'b',label='validation acc')
+plt.plot(x,acc,'bo',label='training acc')
+plt.xlabel('Epochs')
+plt.ylabel('Acc')
+plt.title('training and validation acc')
+plt.legend()
+plt.show()
+
+test_path='/content/data/test/'
+result=rnn.evaluate_generator(image_generator(test_path,4), steps=82)
