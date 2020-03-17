@@ -4,6 +4,8 @@ import numpy as np
 from keras.models import load_model
 import skimage.io as io
 import matplotlib.pyplot as plt
+import json
+
 def predAndPlot(root):
   if not os.path.exists('/content/temp'):
       os.makedirs('/content/temp')
@@ -47,10 +49,16 @@ def predAndPlot(root):
       inp[i,j,:,:,:]=(io.imread(root3+k))/255
   model=load_model('/content/drive/My Drive/my_model.h5')
   result=model.predict(inp)
-  print(result)
   x=[]
+  data=[]
   for i in range(len(result)):
     x.append(5*(i+1))
+    data.append([5*(i+1),str(result[i][0])])
+  jsontext = {'stretch body':data}
+  jsondata = json.dumps(jsontext)
+  f = open('time_label_{}.json'.format(name), 'w')
+  f.write(jsondata)
+  f.close()
   plt.plot(x,result,label='prediction')
   plt.ylim((0,1))
   plt.xticks(x, x)
