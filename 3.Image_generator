@@ -1,4 +1,5 @@
 import numpy as np
+import skimage.io as io
 def get_input(input_path):
     out= np.ndarray((50,240,320,3), dtype='float32')
     l=len(input_path)
