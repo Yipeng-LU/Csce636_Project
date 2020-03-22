@@ -1,13 +1,8 @@
-import 3.Image_generator
-import os
-import skimage.io as io
-import numpy as np
 from keras import layers
 from keras import models
 from keras.models import Sequential, Model
 from keras import Input
 from keras.layers import LSTM
-import random
 
 cnn= models.Sequential()
 cnn.add(layers.Conv2D(32, (3, 3), activation='relu',input_shape=(240, 320, 3)))
