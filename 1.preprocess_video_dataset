@@ -1,4 +1,5 @@
 import moviepy.editor as mp
+import os
 def process(root,name):
     video = mp.VideoFileClip(root)
     video=video.resize((320,240))
