@@ -1,9 +1,4 @@
-import moviepy.editor as mp
-import os
-import numpy as np
 from keras.models import load_model
-import skimage.io as io
-import matplotlib.pyplot as plt
 import json
 
 def predAndPlot(root):
