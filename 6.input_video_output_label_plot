@@ -2,6 +2,9 @@ from keras.models import load_model
 import json
 import matplotlib.pyplot as plt
 import moviepy.editor as mp
+import numpy as np
+import skimage.io as io
+import os
 
 def predAndPlot(root):
   if not os.path.exists('/content/temp'):
