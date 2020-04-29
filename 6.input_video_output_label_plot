@@ -47,7 +47,7 @@ def predAndPlot(root):
     ls.sort()
     for j,k in enumerate(ls):
       inp[i,j,:,:,:]=(io.imread(root3+k))/255
-  model=load_model('/content/drive/My Drive/my_model.h5')
+  model=load_model('my_model.h5')
   result=model.predict(inp)
   x=[]
   data=[]
@@ -56,7 +56,7 @@ def predAndPlot(root):
     data.append([5*(i+1),str(result[i][0])])
   jsontext = {'stretch body':data}
   jsondata = json.dumps(jsontext)
-  f = open('time_label_{}.json'.format(name), 'w')
+  f = open('/content/829009541.json'.format(name), 'w')
   f.write(jsondata)
   f.close()
   plt.plot(x,result,label='prediction')
@@ -66,4 +66,5 @@ def predAndPlot(root):
   plt.ylabel('prob of stretching body')
   plt.title('prediction for every 5s')
   plt.legend()
+  plt.savefig('/content/829009541.jpg')
   plt.show()
